@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { UsuarioController } from "./usuario.controller";
 import { UsuarioRepository } from "./usuario.repository";
+import { emailUnicoValidator } from "./validation/usuarioEmail.valdiation";
 
 //Indicar que está classe se trata de um módulo da aplicação
 @Module({
@@ -8,7 +9,7 @@ import { UsuarioRepository } from "./usuario.repository";
     //Controlador do módulo usuário
     controllers: [UsuarioController],
     //Provider para injeção de dependência do UsuárioRepository
-    providers: [UsuarioRepository],
+    providers: [UsuarioRepository, emailUnicoValidator],
     
 })
 export class UsuarioModule{

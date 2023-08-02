@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { useContainer } from 'class-validator';
 
 /* 
       ANOTAÇÕES GERAIS
@@ -29,6 +30,12 @@ async function bootstrap() {
       forbidNonWhitelisted:true
     })
   );
+  /*
+    método utilizado para que o class-validator saiba de onde buscar as suas dependências, utilzando dos mesmos mecanismos que o Nest
+    1º parâmetro -> é passado o root module da nossa aplicação para o class-validator saber de qual mecanismo de injeção de dependência irá utilzar
+    2º parâmetro -> caso não consiga resolver a injeção das dependências como o Nest, ele irá usar seu próprio container para isso
+  */
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
   await app.listen(3000);
 }
 bootstrap();
